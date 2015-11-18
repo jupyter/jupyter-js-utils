@@ -3,12 +3,12 @@ module.exports = function (config) {
     browsers: ['Firefox'],
     frameworks: ['browserify', 'mocha'],
     reporters: ['mocha', 'coverage'],
-    preprocessors: { 'build/index.js': ['browserify'] },
+    preprocessors: { 'build/*.js': ['browserify'] },
     browserify: {
       debug: true,
-      transform: ['browserify-istanbul']
+      transform: ['browserify-css', 'browserify-istanbul']
     },
-    files: ['build/index.js'],
+    files: ['build/*.js'],
     coverageReporter: {
       reporters : [
         { 'type': 'text' },

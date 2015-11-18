@@ -6,6 +6,7 @@
   "mode": "file",
   "out": "docs/api",
   "src": [
-    "src/index.ts"
+    "src/index.ts",
+    "typings/es6-promise/es6-promise.d.ts"
   ]
 }
