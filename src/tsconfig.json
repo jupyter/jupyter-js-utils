@@ -8,5 +8,9 @@
     "moduleResolution": "node",
     "target": "ES5",
     "outDir": "../lib"
-  }
+  },
+  "files": [
+    "../typings/es6-promise/es6-promise.d.ts",
+    "index.ts"
+  ]
 }
