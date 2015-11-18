@@ -1,7 +1,7 @@
 {
   "name": "jupyter-js-utils",
   "version": "0.1.0",
-  "description": "Utility functions for Jupyter JS repositories",
+  "description": "JavaScript utilities for the Jupyter frontend",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "dependencies": {},

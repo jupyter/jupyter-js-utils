@@ -4,7 +4,7 @@ jupyter-js-utils
 [![Build Status](https://travis-ci.org/jupyter/jupyter-js-utils.svg)](https://travis-ci.org/jupyter/jupyter-js-utils?branch=master)
 [![Coverage Status](https://coveralls.io/repos/jupyter/jupyter-js-utils/badge.svg?branch=master&service=github)](https://coveralls.io/github/jupyter/jupyter-js-utils?branch=master)
 
-Front matter for a Jupyter jupyter-js-based application.
+JavaScript utilities for the Jupyter frontend.
 
 [API Docs](http://jupyter.github.io/jupyter-js-utils/api/)
 
