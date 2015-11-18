@@ -1,0 +1,9 @@
+*.suo
+*.user
+.DS_Store
+docs/api
+example/*.js
+lib
+node_modules
+test/build
+test/coverage
