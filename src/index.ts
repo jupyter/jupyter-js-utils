@@ -233,3 +233,28 @@ class PromiseDelegate<T> {
   private _resolve: (value?: T | Thenable<T>) => void;
   private _reject: (reason?: any) => void;
 }
+
+
+/**
+ * Get global configuration data for the Jupyter application.
+ *
+ * @param name - The name of the configuration option.
+ *
+ * #### Notes
+ * For browser based applications, it is assumed that the page HTML
+ * includes a script tag with the id `jupyterConfigData` containing the
+ * configuration as valid JSON.
+ */
+export
+function getConfigOption(name: string): any {
+  if (typeof window === 'undefined') {
+    // TODO: support node here.
+    return null;
+  }
+  let el = document.getElementById('jupyterConfigData');
+  if (!el) {
+    return null;
+  }
+  let config = JSON.parse(el.textContent);
+  return (config as any)[name];
+}
