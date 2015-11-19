@@ -244,7 +244,7 @@ class PromiseDelegate<T> {
  *
  * #### Notes
  * For browser based applications, it is assumed that the page HTML
- * includes a script tag with the id `jupyterConfigData` containing the
+ * includes a script tag with the id `jupyter-config-data` containing the
  * configuration as valid JSON.
  */
 export
@@ -253,7 +253,7 @@ function getConfigOption(name: string): any {
     // TODO: support node here.
     return void 0;
   }
-  let el = document.getElementById('jupyterConfigData');
+  let el = document.getElementById('jupyter-config-data');
   if (!el) {
     return void 0;
   }
