@@ -240,6 +240,8 @@ class PromiseDelegate<T> {
  *
  * @param name - The name of the configuration option.
  *
+ * @returns The config value or `undefined` if not found.
+ *
  * #### Notes
  * For browser based applications, it is assumed that the page HTML
  * includes a script tag with the id `jupyterConfigData` containing the
@@ -249,11 +251,11 @@ export
 function getConfigOption(name: string): any {
   if (typeof window === 'undefined') {
     // TODO: support node here.
-    return null;
+    return void 0;
   }
   let el = document.getElementById('jupyterConfigData');
   if (!el) {
-    return null;
+    return void 0;
   }
   let config = JSON.parse(el.textContent);
   return (config as any)[name];
