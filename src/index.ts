@@ -233,3 +233,55 @@ class PromiseDelegate<T> {
   private _resolve: (value?: T | Thenable<T>) => void;
   private _reject: (reason?: any) => void;
 }
+
+
+/**
+ * Global config data for the Jupyter application.
+ */
+var configData: any = null;
+
+
+/**
+ *  Make an object fully immutable by freezing each object in it.
+ */
+function deepFreeze(obj: any): any {
+
+  // Freeze properties before freezing self
+  Object.getOwnPropertyNames(obj).forEach(function(name) {
+    var prop = obj[name];
+
+    // Freeze prop if it is an object
+    if (typeof prop == 'object' && prop !== null && !Object.isFrozen(prop))
+      deepFreeze(prop);
+  });
+
+  // Freeze self
+  return Object.freeze(obj);
+}
+
+
+/**
+ * Get global configuration data for the Jupyter application.
+ *
+ * @param name - The name of the configuration option.
+ *
+ * @returns The config value or `undefined` if not found.
+ *
+ * #### Notes
+ * For browser based applications, it is assumed that the page HTML
+ * includes a script tag with the id `jupyter-config-data` containing the
+ * configuration as valid JSON.
+ */
+export
+function getConfigOption(name: 'baseUrl'): string;
+function getConfigOption(name: string): any {
+  if (configData) {
+    return configData[name];
+  }
+  let el = document.getElementById('jupyter-config-data');
+  if (!el) {
+    return void 0;
+  }
+  configData = deepFreeze(JSON.parse(el.textContent));
+  return configData[name];
+}
