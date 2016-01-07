@@ -1,15 +1,16 @@
 language: node_js
 node_js:
-  - '0.12'
+- '0.12'
 sudo: false
 env:
   matrix:
-    - GROUP=
+  - GROUP=
   global:
-    - GHREPO=github.com/jupyter/jupyter-js-utils
+  - GHREPO=github.com/jupyter/jupyter-js-utils
+  - secure: GkJRK9Zc7/iZXfnZxuJc/TXvnUdQ/ec1FqfRNyjLoocuJYsVCYRDC8AUeAMnT7+AXNBc5s5vI22yXILMLSqdw+YSBiIXHykunA3kEf4kiqAar0pQtIWRVcP0mEcZ3OfIsfadr/qGEmJVERjB1+apH3TVLswTmGOEnQKsKiEsNoQsS9wmkJ9y5gBmi7QEiFSnxIOWe3L3dCmXYkAzKRSd4S/iEqzbFNxsRxIZSDFg+trCXI/kKqcjybAV45WR4rDwmFjm6McK0aEZYU1sVkq/XW4prtVlLhygirckgNwtCMSPUHAzPeSfSsTXnplOv5URQJKTy8lLLj0YUBKfF5yfxWvBcVE7VvxeBAqRXjlPVMTvdqnmyP8W+wBO3sDgqmckm2Xb+icaIzY07UmjJklEc2HSvtf/eMVXW4JmVrQO6rMn/HG9gW/7bH3sNSwWR0yjjj3PURNS1xI5VVRXPf/yXc2DkqeQzGv6oe6ilU0CdbNmduw7oTUsbC60YZvXS1cjJ/Q0H8laLDo02vWvoUIytTgsHCPtgBM85egXxnJ5hYrE8LZLvLfge7XGgjfa3ACqGD/OiU8D2Foj/kjnCOWWfRN5bDzDgaVzeZdmO9DDBadwlmTgu8n0r9PZK4mkDCZKx9mQ908cAglJERd4xRdD/FdHgeGiZ3GpfpySMxmsXYY=
 install:
-  - bash scripts/travis_install.sh
+- bash scripts/travis_install.sh
 script:
-  - bash scripts/travis_script.sh
+- bash scripts/travis_script.sh
 after_success:
-  - bash scripts/travis_after_success.sh
+- bash scripts/travis_after_success.sh
