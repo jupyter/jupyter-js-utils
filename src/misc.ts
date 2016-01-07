@@ -379,3 +379,30 @@ function getConfigOption(name: string): any {
   configData = deepFreeze(JSON.parse(el.textContent));
   return configData[name];
 }
+
+
+/**
+ * Get the base URL for a Jupyter application.
+ */
+export
+function getBaseUrl(): string {
+  let baseUrl = getConfigOption('baseUrl');
+  if (baseUrl === void 0) {
+    baseUrl = (typeof location === 'undefined' ?
+               'http://localhost:8888/': location.origin + '/');
+  }
+  return baseUrl;
+}
+
+
+/**
+ * Get the base websocket URL for a Jupyter application.
+ */
+export
+function getWsUrl(): string {
+  let wsUrl = getConfigOption('wsUrl');
+  if (wsUrl === void 0) {
+    wsUrl = 'ws' + getBaseUrl().slice(4);
+  }
+  return wsUrl;
+}
