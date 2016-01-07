@@ -1,10 +1,21 @@
 module.exports = function (config) {
   config.set({
-    frameworks: ['browserify', 'mocha'],
+    basePath: '..',
+    frameworks: ['mocha'],
     reporters: ['mocha'],
-    preprocessors: { 'build/*.js': ['browserify'] },
-    browserify: { debug: true, transform: ['browserify-css'] },
-    files: ['build/*.js'],
+    preprocessors: { 'test/src/*.ts': ['webpack'] },
+    files: ['test/src/*.ts'],
+    webpack: {
+      resolve: {
+        extensions: ['', '.ts', '.js']
+      },
+      module: {
+        loaders: [
+          { test: /\.ts$/, loader: 'ts-loader' },
+          { test: /\.css$/, loader: 'style-loader!css-loader' },
+        ]
+      }
+    },
     port: 9876,
     colors: true,
     singleRun: true,
