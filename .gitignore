@@ -1,7 +1,7 @@
 *.suo
 *.user
 .DS_Store
-docs/api
+docs/
 example/*.js
 lib
 node_modules
