@@ -6,7 +6,7 @@ env:
   matrix:
   - GROUP=
   global:
-  - GHREPO=github.com/jupyter/jupyter-js-utils
+  - GHREPO=github.com/jupyter/jupyter-js-utils.git
   - secure: VnTyRGUnv86ibfS1Fjducxwwvp8/VOHC8WqkSglNMcvdnQY538rmK8Kyck85VCYe+xj9T57LXmidlOtq7OHJK/t80nFUhxUc+IzncKSfhD8eVGutFH696dVVXAHBkkPgBIfHTdFAIRpO38EwFdvMk/9abAg2W4jEJlFbv3iOa5gBEgigpbk26HOI1rYhJvJA1Nrrf0N7myKDFdszGoI93zG2IvAIkaE1n+LnGGOScM/8Yz0Umryc6LQUhIt2ZJeaJ46wuTiukPxXfSGlAhqmBjl5LSHwCLw1At+TLUXeS5hHGkULb6vSFLyxcQOuNZ3jkWWGr3B0vlGXG2Z5fyz//Oq9fFZFB+gJh/GMiB3eZwrsI3XJ5KynYZPNpQE+V0g8oAPextCN9AldlsYkOIyFBoVFlYdislddO1WrrqjXeiNlQ2FbGtndbeDzKASvMrTEmqApQNJj4LY97ScbZwABIWZec3wY7IY7Fi4FaNJnHPGZkqY/ZrMkJIJW81VT/xrNVKoW2FfJ3DG6/Zrk/guuzNwXZVW8U86qDMov2Kbs4j2TlPrlyCEIs7zHBaseCQ7L2RA9Kd1lTT2Q8eE9k7261FzH7TNiZdB1tXa2xQY/7kK4OoOOR6m1/itdDGRAL2b6Yvgex+lqORTxSkaIaKe4f0qJznxYdrO4z6XcTqcBUZk=
 install:
 - bash scripts/travis_install.sh
