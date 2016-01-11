@@ -6,7 +6,7 @@ jupyter-js-utils
 
 JavaScript utilities for the Jupyter frontend.
 
-[API Docs](http://jupyter.github.io/jupyter-js-utils/api/)
+[API Docs](http://jupyter.github.io/jupyter-js-utils/)
 
 
 Package Install
