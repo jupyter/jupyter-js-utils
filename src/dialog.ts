@@ -168,8 +168,8 @@ function showDialog(options: IDialogOptions): Promise<IButtonItem>{
 
   return new Promise<IButtonItem>((resolve, reject) => {
     buttonNodes.map(node => {
-      node.onclick = (event: Event) => {
-        if (node.contains(event.target as HTMLElement)) {
+      node.addEventListener('click', evt => {
+        if (node.contains(evt.target as HTMLElement)) {
           host.removeChild(dialog);
           let button = buttons[buttonNodes.indexOf(node)];
           if (button.command && button.command.isEnabled) {
@@ -177,20 +177,24 @@ function showDialog(options: IDialogOptions): Promise<IButtonItem>{
           }
           resolve(button);
         }
-      }
+      });
     });
-    dialog.onkeydown = (event: KeyboardEvent) => {
+    dialog.addEventListener('keydown', evt => {
       // Check for escape key
-      if (event.keyCode === 27) {
+      if (evt.keyCode === 27) {
         host.removeChild(dialog);
         resolve(null);
       }
-    }
+    });
+    dialog.addEventListener('contextmenu', evt => {
+      evt.preventDefault();
+      evt.stopPropagation();
+    });
     let close = dialog.getElementsByClassName(CLOSE_ICON_CLASS)[0];
-    (close as HTMLElement).onclick = () => {
+    close.addEventListener('click', () => {
       host.removeChild(dialog);
       resolve(null);
-    }
+    });
   });
 }
 
