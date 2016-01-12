@@ -7,6 +7,8 @@
   "out": "docs",
   "src": [
     "src/index.ts",
-    "typings/es6-promise/es6-promise.d.ts"
+    "typings/codemirror/codemirror.d.ts",
+    "typings/es6-promise/es6-promise.d.ts",
+    "typings/requirejs/requirejs.d.ts"
   ]
 }
