@@ -399,10 +399,11 @@ function getBaseUrl(): string {
  * Get the base websocket URL for a Jupyter application.
  */
 export
-function getWsUrl(): string {
+function getWsUrl(baseUrl?: string): string {
   let wsUrl = getConfigOption('wsUrl');
   if (wsUrl === void 0) {
-    wsUrl = 'ws' + getBaseUrl().slice(4);
+    baseUrl = baseUrl || getBaseUrl();
+    wsUrl = 'ws' + baseUrl.slice(4);
   }
   return wsUrl;
 }
