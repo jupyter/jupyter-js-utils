@@ -226,7 +226,7 @@ function ajaxRequest(url: string, settings: IAjaxSettings): Promise<IAjaxSuccess
   let method = settings.method || 'GET';
   let user = settings.user || '';
   let password = settings.password || '';
-  if (!!settings.cache) {
+  if (!settings.cache) {
     // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Bypassing_the_cache.
     url += ((/\?/).test(url) ? "&" : "?") + (new Date()).getTime();
   }
