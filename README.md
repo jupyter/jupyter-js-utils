@@ -75,6 +75,7 @@ Supported Runtimes
 The runtime versions which are currently *known to work* are listed below.
 Earlier versions may also work, but come with no guarantees.
 
+- Node 0.12.7+
 - IE 11+
 - Firefox 32+
 - Chrome 38+

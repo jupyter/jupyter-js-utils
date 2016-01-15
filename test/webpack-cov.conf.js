@@ -7,9 +7,6 @@ module.exports = {
   },
   bail: true,
   module: {
-    loaders: [
-      { test: /\.css$/, loader: 'style-loader!css-loader' },
-    ],
     preLoaders: [
       // instrument only testing sources with Istanbul
       {
