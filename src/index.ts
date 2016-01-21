@@ -369,7 +369,10 @@ function getConfigOption(name: string): string;
 
 export
 function getConfigOption(name: string): any {
-  if (configData || (typeof document === 'undefined')) {
+  if (typeof document === 'undefined') {
+    return;
+  }
+  if (configData) {
     return configData[name];
   }
   let el = document.getElementById('jupyter-config-data');
