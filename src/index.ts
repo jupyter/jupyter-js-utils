@@ -385,10 +385,11 @@ function getConfigOption(name: string): any {
     configData = minimist(process.argv.slice(2));
   } else {
     let el = document.getElementById('jupyter-config-data');
-    if (!el) {
-      return void 0;
+    if (el) {
+      configData = JSON.parse(el.textContent);
+    } else {
+      configData = {};
     }
-    configData = JSON.parse(el.textContent);
   }
   configData = deepFreeze(configData);
   return configData[name];
