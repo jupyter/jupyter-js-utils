@@ -2,6 +2,9 @@
 // Distributed under the terms of the Modified BSD License.
 'use strict';
 
+import * as minimist
+  from 'minimist';
+
 
 /**
  * Copy the contents of one object to another, recursively.
@@ -334,6 +337,12 @@ var configData: any = null;
 
 
 /**
+ * Declare a stub for the node process variable.
+ */
+declare var process: any;
+
+
+/**
  *  Make an object fully immutable by freezing each object in it.
  */
 function deepFreeze(obj: any): any {
@@ -369,17 +378,20 @@ function getConfigOption(name: string): string;
 
 export
 function getConfigOption(name: string): any {
-  if (typeof document === 'undefined') {
-    return;
-  }
   if (configData) {
     return configData[name];
   }
-  let el = document.getElementById('jupyter-config-data');
-  if (!el) {
-    return void 0;
+  if (typeof document === 'undefined') {
+    configData = minimist(process.argv.slice(2));
+  } else {
+    let el = document.getElementById('jupyter-config-data');
+    if (el) {
+      configData = JSON.parse(el.textContent);
+    } else {
+      configData = {};
+    }
   }
-  configData = deepFreeze(JSON.parse(el.textContent));
+  configData = deepFreeze(configData);
   return configData[name];
 }
 

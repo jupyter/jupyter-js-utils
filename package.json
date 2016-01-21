@@ -1,10 +1,11 @@
 {
   "name": "jupyter-js-utils",
-  "version": "0.2.8",
+  "version": "0.2.11",
   "description": "JavaScript utilities for the Jupyter frontend",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "dependencies": {
+    "minimist": "^1.2.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.6",
@@ -23,8 +24,8 @@
     "docs": "typedoc --options scripts/tdoptions.json",
     "postinstall": "npm dedupe",
     "prepublish": "npm run build",
-    "test:coverage": "cd test && istanbul cover _mocha -- build/index.js",
-    "test": "mocha test/build/index.js"
+    "test:coverage": "cd test && istanbul cover _mocha -- build/index.js --foo bar",
+    "test": "mocha test/build/index.js --foo bar"
   },
   "repository": {
     "type": "git",

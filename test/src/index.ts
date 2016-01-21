@@ -8,10 +8,11 @@ import {
   getConfigOption
 } from '../../lib'
 
+
 describe('jupyter-js-utils', () => {
 
   it('should always pass', () => {
-    expect(getConfigOption('foo')).to.be(void 0);
+    expect(getConfigOption('foo')).to.be('bar');
   });
 
 });

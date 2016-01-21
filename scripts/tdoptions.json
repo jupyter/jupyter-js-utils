@@ -7,6 +7,7 @@
   "out": "docs",
   "src": [
     "src/index.ts",
-    "typings/es6-promise/es6-promise.d.ts"
+    "typings/es6-promise/es6-promise.d.ts",
+    "typings/minimist/minimist.d.ts"
   ]
 }
