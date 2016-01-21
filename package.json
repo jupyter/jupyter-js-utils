@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "dependencies": {
+    "minimist": "^1.2.0",
   },
   "devDependencies": {
     "coveralls": "^2.11.6",
@@ -24,7 +25,7 @@
     "postinstall": "npm dedupe",
     "prepublish": "npm run build",
     "test:coverage": "cd test && istanbul cover _mocha -- build/index.js",
-    "test": "mocha test/build/index.js"
+    "test": "mocha test/build/index.js --foo bar"
   },
   "repository": {
     "type": "git",
