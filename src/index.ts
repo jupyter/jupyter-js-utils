@@ -378,18 +378,19 @@ function getConfigOption(name: string): string;
 
 export
 function getConfigOption(name: string): any {
-  if (typeof document === 'undefined') {
-    configData = minimist(process.argv.slice(2));
-    configData = deepFreeze(configData);
-  }
   if (configData) {
     return configData[name];
   }
-  let el = document.getElementById('jupyter-config-data');
-  if (!el) {
-    return void 0;
+  if (typeof document === 'undefined') {
+    configData = minimist(process.argv.slice(2));
+  } else {
+    let el = document.getElementById('jupyter-config-data');
+    if (!el) {
+      return void 0;
+    }
+    configData = JSON.parse(el.textContent);
   }
-  configData = deepFreeze(JSON.parse(el.textContent));
+  configData = deepFreeze(configData);
   return configData[name];
 }
 
