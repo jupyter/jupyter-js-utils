@@ -4,11 +4,14 @@
 
 import expect = require('expect.js');
 
+import {
+  getConfigOption
+} from '../../lib'
 
 describe('jupyter-js-utils', () => {
 
   it('should always pass', () => {
-
+    expect(getConfigOption('foo')).to.be(void 0);
   });
 
 });
