@@ -5,14 +5,8 @@
 import * as minimist
   from 'minimist';
 
-
-// Handle require.js.
-var rjs: any;
-if (typeof requirejs !== 'undefined') {
-  rjs = requirejs;
-} else {
-  rjs = require('requirejs');
-}
+import * as requirejs
+  from 'requirejs';
 
 
 /**
@@ -303,7 +297,7 @@ function loadClass(className: string, moduleName: string, registry?: { [key: str
   return new Promise((resolve, reject) => {
     // Try loading the view module using require.js
     if (moduleName) {
-      rjs([moduleName], (mod: any) => {
+      requirejs([moduleName], (mod: any) => {
         if (mod[className] === void 0) {
           let msg = `Class ${className} not found in module ${moduleName}`;
           reject(new Error(msg));
