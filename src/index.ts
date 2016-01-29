@@ -5,6 +5,9 @@
 import * as minimist
   from 'minimist';
 
+import * as requirejs
+  from 'requirejs';
+
 
 /**
  * Copy the contents of one object to another, recursively.

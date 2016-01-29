@@ -81,6 +81,12 @@ Earlier versions may also work, but come with no guarantees.
 - Chrome 38+
 
 
+Bundling for the Browser
+------------------------
+When using Webpack, specify the following alias:
+`requirejs: 'requirejs/require'`.
+
+
 Usage Examples
 --------------
 
