@@ -83,8 +83,7 @@ Earlier versions may also work, but come with no guarantees.
 
 Bundling for the Browser
 ------------------------
-When using Webpack, specify the following alias:
-`requirejs: 'requirejs/require'`.
+Specify the following alias: `requirejs: 'requirejs/require'`.
 
 
 Usage Examples
