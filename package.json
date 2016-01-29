@@ -5,8 +5,7 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "dependencies": {
-    "minimist": "^1.2.0",
-    "requirejs": "^2.1.22"
+    "minimist": "^1.2.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.6",
