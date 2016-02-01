@@ -12,7 +12,7 @@
   "files": [
     "../typings/es6-promise/es6-promise.d.ts",
     "../typings/minimist/minimist.d.ts",
-    "../typings/requirejs/r.d.ts",
+    "../typings/require/require.d.ts",
     "index.ts"
   ]
 }

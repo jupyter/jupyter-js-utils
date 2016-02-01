@@ -5,9 +5,6 @@
 import * as minimist
   from 'minimist';
 
-import * as requirejs
-  from 'requirejs';
-
 
 /**
  * Copy the contents of one object to another, recursively.
@@ -297,14 +294,17 @@ function loadClass(className: string, moduleName: string, registry?: { [key: str
   return new Promise((resolve, reject) => {
     // Try loading the view module using require.js
     if (moduleName) {
-      requirejs([moduleName], (mod: any) => {
+      if (typeof require.ensure === "undefined") {
+        require.ensure = require('node-ensure'); // shim for node.js
+      }
+      require.ensure([moduleName], (mod: any) => {
         if (mod[className] === void 0) {
           let msg = `Class ${className} not found in module ${moduleName}`;
           reject(new Error(msg));
         } else {
            resolve(mod[className]);
         }
-      }, reject);
+      });
     } else {
       if (registry && registry[className]) {
         resolve(registry[className]);
