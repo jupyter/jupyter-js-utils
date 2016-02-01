@@ -6,6 +6,7 @@
   "typings": "lib/index.d.ts",
   "dependencies": {
     "minimist": "^1.2.0",
+    "node-ensure": "0.0.0",
     "requirejs": "^2.1.22"
   },
   "devDependencies": {
