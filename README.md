@@ -80,10 +80,7 @@ Earlier versions may also work, but come with no guarantees.
 - Firefox 32+
 - Chrome 38+
 
-
-Bundling for the Browser
-------------------------
-Specify the following alias: `requirejs: 'requirejs/require'`.
+Note: "requirejs" must be included in a global context for Comm targets.
 
 
 Usage Examples
