@@ -433,7 +433,7 @@ function getConfigOption(name: string): any {
 export
 function getBaseUrl(): string {
   let baseUrl = getConfigOption('baseUrl');
-  if (baseUrl === void 0) {
+  if (!baseUrl || baseUrl === '/') {
     baseUrl = (typeof location === 'undefined' ?
                'http://localhost:8888/': location.origin + '/');
   }
@@ -447,7 +447,7 @@ function getBaseUrl(): string {
 export
 function getWsUrl(baseUrl?: string): string {
   let wsUrl = getConfigOption('wsUrl');
-  if (wsUrl === void 0) {
+  if (!wsUrl) {
     baseUrl = baseUrl || getBaseUrl();
     wsUrl = 'ws' + baseUrl.slice(4);
   }
