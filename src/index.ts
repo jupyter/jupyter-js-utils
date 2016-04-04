@@ -38,6 +38,29 @@ function copy(object: any): any {
 
 
 /**
+ * Check for shallow equality of two objects.
+ */
+export
+function shallowEquals(o1: any, o2: any): boolean {
+  for (var p in o1) {
+    if (o1.hasOwnProperty(p)) {
+      if (o1[p] !== o2[p]) {
+        return false;
+      }
+    }
+  }
+  for (var p in o2) {
+    if (o2.hasOwnProperty(p)) {
+      if (o1[p] !== o2[p]) {
+        return false;
+      }
+    }
+  }
+  return true;
+};
+
+
+/**
  * Get a random 128b hex string (not a formal UUID)
  */
 export
