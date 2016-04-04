@@ -50,10 +50,8 @@ function shallowEquals(o1: any, o2: any): boolean {
     }
   }
   for (var p in o2) {
-    if (o2.hasOwnProperty(p)) {
-      if (o1[p] !== o2[p]) {
-        return false;
-      }
+    if (o2.hasOwnProperty(p) && !o1.hasOwnProperty(p)) {
+      return false;
     }
   }
   return true;
