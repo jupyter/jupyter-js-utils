@@ -471,7 +471,7 @@ function getWsUrl(baseUrl?: string): string {
   if (!wsUrl) {
     baseUrl = baseUrl || getBaseUrl();
     if (baseUrl.indexOf('http') !== 0) {
-      if (typeof location === 'undefined') {
+      if (typeof location !== 'undefined') {
         baseUrl = urlPathJoin(location.origin, baseUrl);
       } else {
         baseUrl = urlPathJoin('http://localhost:8888/', baseUrl);
