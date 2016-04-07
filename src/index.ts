@@ -87,10 +87,10 @@ function urlPathJoin(...paths: string[]): string {
     if (i > 0) {
       path = path.replace(/\/\/+/, '/');
     }
-    if (url.length > 0 && url.charAt(url.length - 1) != '/') {
-      url = url + '/' + paths[i];
+    if (url.length > 0 && url.charAt(url.length - 1) != '/' && path[0] != '/') {
+      url = url + '/' + path;
     } else {
-      url = url + paths[i];
+      url = url + path;
     }
   }
   return url
