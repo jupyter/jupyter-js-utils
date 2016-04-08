@@ -59,7 +59,7 @@ function shallowEquals(o1: any, o2: any): boolean {
 
 
 /**
- * Get a random 128b hex string (not a formal UUID)
+ * Get a random 32 character hex string (not a formal UUID)
  */
 export
 function uuid(): string {
