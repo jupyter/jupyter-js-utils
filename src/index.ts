@@ -315,7 +315,7 @@ function loadClass(className: string, moduleName: string, registry?: { [key: str
   return new Promise((resolve, reject) => {
     // Try loading the view module using require.js
     if (moduleName) {
-      (window as any).require([moduleName], (mod: any) => {
+      requirejs([moduleName], (mod: any) => {
         if (mod[className] === void 0) {
           let msg = `Class ${className} not found in module ${moduleName}`;
           reject(new Error(msg));
