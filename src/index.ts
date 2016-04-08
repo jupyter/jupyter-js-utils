@@ -59,7 +59,7 @@ function shallowEquals(o1: any, o2: any): boolean {
 
 
 /**
- * Get a random 128b hex string (not a formal UUID)
+ * Get a random 32 character hex string (not a formal UUID)
  */
 export
 function uuid(): string {
@@ -315,7 +315,7 @@ function loadClass(className: string, moduleName: string, registry?: { [key: str
   return new Promise((resolve, reject) => {
     // Try loading the view module using require.js
     if (moduleName) {
-      requirejs([moduleName], (mod: any) => {
+      (window as any).require([moduleName], (mod: any) => {
         if (mod[className] === void 0) {
           let msg = `Class ${className} not found in module ${moduleName}`;
           reject(new Error(msg));
