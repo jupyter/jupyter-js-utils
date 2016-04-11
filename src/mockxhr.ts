@@ -40,6 +40,20 @@ class MockXMLHttpRequest {
   }
 
   /**
+   * Password of the request.
+   */
+  get password(): string {
+    return this._password;
+  }
+
+  /**
+   * Async status of the request.
+   */
+  get async(): boolean {
+    return this._async;
+  }
+
+  /**
    * Response data for the request.
    */
   get response(): any {
@@ -152,9 +166,7 @@ class MockXMLHttpRequest {
     if (user !== void 0) {
       this._user = user;
     }
-    if (password !== void 0) {
-      this._password = password;
-    }
+    this._password = password || '';
     this._readyState = MockXMLHttpRequest.OPENED;
     doLater(() => {
       var onReadyState = this._onReadyState;
@@ -196,6 +208,13 @@ class MockXMLHttpRequest {
   }
 
   /**
+   * Get a copy of the HTTP request header.
+   */
+  get requestHeaders(): { [key: string]: any } {
+    return JSON.parse(JSON.stringify(this._requestHeader));
+  }
+
+  /**
    * Set the value of an HTTP request header.
    */
   setRequestHeader(header: string, value: string) {
@@ -207,7 +226,7 @@ class MockXMLHttpRequest {
    * or null if either the response has not yet been received
    * or the header doesn't exist in the response.
    */
-  getResponseHeader(header: string): string{
+  getResponseHeader(header: string): string {
     if (this._responseHeader.hasOwnProperty(header)) {
       return this._responseHeader[header];
     }
@@ -227,16 +246,26 @@ class MockXMLHttpRequest {
     this._response = response;
     this._responseHeader = header;
     this._readyState = MockXMLHttpRequest.DONE;
+
     doLater(() => {
-      if (statusCode >= 400) {
-        var onError = this._onError;
-        if (onError) onError({ message: 'Invalid status code' });
-      } else {
-        var onReadyState = this._onReadyState;
-        if (onReadyState) onReadyState();
-        var onLoad = this._onLoad;
-        if (onLoad) onLoad();
-      }
+      this._statusText = `${statusCode} ${statusReasons[statusCode]}`;
+      var onReadyState = this._onReadyState;
+      if (onReadyState) onReadyState();
+      var onLoad = this._onLoad;
+      if (onLoad) onLoad();
+    });
+  }
+
+  /**
+   * Simulate a request error.
+   */
+  error(error: Error): void {
+    this._response = '';
+    this._readyState = MockXMLHttpRequest.DONE;
+
+    doLater(() => {
+      var onError = this._onError;
+      if (onError) onError(error);
     });
   }
 
@@ -254,10 +283,10 @@ class MockXMLHttpRequest {
   private _user = '';
   private _password = '';
   private _onLoad: () => void = null;
-  private _onError: (evt?: any) => void = null;
+  private _onError: (evt: Error) => void = null;
   private _onProgress: () => void = null;
-  private _requestHeader: any = {};
-  private _responseHeader: any = {};
+  private _requestHeader: { [key: string]: any } = Object.create(null);
+  private _responseHeader: { [key: string]: any } = Object.create(null);
   private _onReadyState: () => void = null;
   private _onTimeout: () => void = null;
 }
@@ -269,4 +298,57 @@ class MockXMLHttpRequest {
  */
 function doLater(cb: () => void): void {
   Promise.resolve().then(cb);
+}
+
+
+/**
+ * Status code reasons.
+ */
+var statusReasons: { [ key: number]: string } = {
+  100: 'Continue',
+  101: 'Switching Protocols',
+  102: 'Processing',
+  200: 'OK',
+  201: 'Created',
+  202: 'Accepted',
+  203: 'Non-Authoritative Information',
+  204: 'No Content',
+  205: 'Reset Content',
+  206: 'Partial Content',
+  207: 'Multi-Status',
+  300: 'Multiple Choices',
+  301: 'Moved Permanently',
+  302: 'Moved Temporarily',
+  303: 'See Other',
+  304: 'Not Modified',
+  305: 'Use Proxy',
+  307: 'Temporary Redirect',
+  400: 'Bad Request',
+  401: 'Unauthorized',
+  402: 'Payment Required',
+  403: 'Forbidden',
+  404: 'Not Found',
+  405: 'Method Not Allowed',
+  406: 'Not Acceptable',
+  407: 'Proxy Authentication Required',
+  408: 'Request Time-out',
+  409: 'Conflict',
+  410: 'Gone',
+  411: 'Length Required',
+  412: 'Precondition Failed',
+  413: 'Request Entity Too Large',
+  414: 'Request-URI Too Large',
+  415: 'Unsupported Media Type',
+  416: 'Requested range not satisfiable',
+  417: 'Expectation Failed',
+  422: 'Unprocessable Entity',
+  423: 'Locked',
+  424: 'Failed Dependency',
+  500: 'Internal Server Error',
+  501: 'Not Implemented',
+  502: 'Bad Gateway',
+  503: 'Service Unavailable',
+  504: 'Gateway Time-out',
+  505: 'HTTP Version not supported',
+  507: 'Insufficient Storage'
 }
