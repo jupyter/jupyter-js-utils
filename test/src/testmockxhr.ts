@@ -57,7 +57,7 @@ describe('jupyter.services - mockXHR', () => {
     }
     xhr.open('GET', 'test.com');
     xhr.onerror = (evt: any) => {
-      expect(evt.message).to.be("Invalid status code");
+      expect(evt.message).to.be('Invalid status code');
       done();
     }
     xhr.send();
@@ -70,7 +70,7 @@ describe('jupyter.services - mockXHR', () => {
     }
     xhr.open('GET', 'test.com');
     xhr.onload = () => {
-      expect(xhr.getResponseHeader('Location')).to.be("Somewhere");
+      expect(xhr.getResponseHeader('Location')).to.be('Somewhere');
       done();
     }
     xhr.send();

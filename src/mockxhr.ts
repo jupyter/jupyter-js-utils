@@ -108,7 +108,7 @@ class MockXMLHttpRequest {
    * Set a callback for when the request is in progress.
    */
   set onprogress(cb: () => void) {
-    throw Error('Not implemented');
+    throw new Error('Not implemented');
     //this._onProgress = cb;
   }
 
@@ -180,7 +180,7 @@ class MockXMLHttpRequest {
     setTimeout(() => {
       if (MockXMLHttpRequest.requests.indexOf(this) === -1) {
         console.error('Unhandled request:', JSON.stringify(this));
-        throw Error(`Unhandled request: ${JSON.stringify(this)}`)
+        throw new Error(`Unhandled request: ${JSON.stringify(this)}`)
       }
       var onRequest = MockXMLHttpRequest.onRequest;
       if (onRequest) onRequest(this);
