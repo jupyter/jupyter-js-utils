@@ -304,30 +304,33 @@ function ajaxRequest(url: string, settings: IAjaxSettings): Promise<IAjaxSuccess
 
 
 /**
- * Try to load a class.
+ * Try to load an object from a module or a registry.
  *
- * Try to load a class from a module asynchronously, if a module
- * is specified, otherwise tries to load a class from the global
+ * Try to load an object from a module asynchronously if a module
+ * is specified, otherwise tries to load an object from the global
  * registry, if the global registry is provided.
  */
 export
-function loadClass(className: string, moduleName: string, registry?: { [key: string]: any }): Promise<any> {
+function loadObject(name: string, moduleName: string, registry?: { [key: string]: any }): Promise<any> {
   return new Promise((resolve, reject) => {
     // Try loading the view module using require.js
     if (moduleName) {
+      if (typeof requirejs === 'undefined') {
+        throw new Error('requirejs not found.')
+      }
       requirejs([moduleName], (mod: any) => {
-        if (mod[className] === void 0) {
-          let msg = `Class ${className} not found in module ${moduleName}`;
+        if (mod[name] === void 0) {
+          let msg = `Object '${name}' not found in module '${moduleName}'`;
           reject(new Error(msg));
         } else {
-           resolve(mod[className]);
+          resolve(mod[name]);
         }
       }, reject);
     } else {
-      if (registry && registry[className]) {
-        resolve(registry[className]);
+      if (registry && registry[name]) {
+        resolve(registry[name]);
       } else {
-        reject(new Error(`Class ${className} not found in registry`));
+        reject(new Error(`Object '${name}' not found in registry`));
       }
     }
   });
