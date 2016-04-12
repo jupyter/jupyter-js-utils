@@ -4,11 +4,30 @@
 
 import expect = require('expect.js');
 
+import requirejs = require('requirejs');
+
 import {
   PromiseDelegate, extend, copy, shallowEquals, uuid, urlPathJoin,
   encodeURIComponents, urlJoinEncode, jsonToQueryString, getConfigOption,
-  getBaseUrl, getWsUrl
+  getBaseUrl, getWsUrl, ajaxRequest, loadObject
 } from '../../lib'
+
+import {
+  MockXMLHttpRequest
+} from '../../lib/mockxhr';
+
+
+// Set up the xml http request object.
+declare var global: any;
+if (typeof window === 'undefined') {
+  global.XMLHttpRequest = MockXMLHttpRequest;
+} else {
+  (window as any).XMLHttpRequest = MockXMLHttpRequest;
+}
+
+
+declare var global: any;
+global.requirejs = requirejs;
 
 
 describe('jupyter-js-utils', () => {
@@ -137,7 +156,7 @@ describe('jupyter-js-utils', () => {
 
     describe('#promise', () => {
 
-      it('should get the underlying promise', (done) => {
+      it('should get the underlying promise', done => {
         let delegate = new PromiseDelegate<number>();
         delegate.promise.then(value => {
           expect(value).to.be(1);
@@ -150,7 +169,7 @@ describe('jupyter-js-utils', () => {
 
     describe('#resolve()', () => {
 
-      it('should resolve the underlying promise', (done) => {
+      it('should resolve the underlying promise', done => {
         let delegate = new PromiseDelegate<number>();
         delegate.promise.then(value => {
           expect(value).to.be(1);
@@ -159,7 +178,7 @@ describe('jupyter-js-utils', () => {
         delegate.resolve(1);
       });
 
-      it('should accept another promise', (done) => {
+      it('should accept another promise', done => {
         let delegate = new PromiseDelegate<number>();
         delegate.promise.then(value => {
           expect(value).to.be(1);
@@ -172,7 +191,7 @@ describe('jupyter-js-utils', () => {
 
     describe('#reject()', () => {
 
-      it('should reject the underlying promise', (done) => {
+      it('should reject the underlying promise', done => {
         let delegate = new PromiseDelegate<number>();
         delegate.promise.catch(() => {
           done();
@@ -180,7 +199,7 @@ describe('jupyter-js-utils', () => {
         delegate.reject();
       });
 
-      it('should accept a reason', (done) => {
+      it('should accept a reason', done => {
         let delegate = new PromiseDelegate<number>();
         delegate.promise.catch(reason => {
           expect(reason).to.be('some reason');
@@ -204,6 +223,120 @@ describe('jupyter-js-utils', () => {
 
     it('should get the default ws url', () => {
       expect(getWsUrl()).to.be('ws://localhost:8888/');
+    });
+
+  });
+
+  describe('ajaxRequest()', () => {
+
+    it('should handle default values', (done) => {
+      let called = false;
+      MockXMLHttpRequest.onRequest = request => {
+        expect(request.method).to.be('GET');
+        expect(request.password).to.be('');
+        expect(request.async).to.be(true);
+        expect(Object.keys(request.requestHeaders)).to.eql([]);
+        let url = request.url;
+        expect(url.indexOf('hello?')).to.be(0);
+        called = true;
+        request.respond(200, "hello!");
+      }
+      ajaxRequest('hello', {}).then(response => {
+        expect(called).to.be(true);
+        expect(response.data).to.be('hello!');
+        expect(response.statusText).to.be('200 OK');
+        done();
+      });
+    });
+
+    it('should allow overrides', (done) => {
+      MockXMLHttpRequest.onRequest = request => {
+        expect(request.method).to.be('POST');
+        expect(request.password).to.be('password');
+        expect(Object.keys(request.requestHeaders)).to.eql(['Content-Type', 'foo']);
+        let url = request.url;
+        expect(url.indexOf('hello?')).to.be(-1);
+        expect(url.indexOf('hello')).to.be(0);
+        request.respond(200, "hello!");
+      };
+      ajaxRequest('hello', {
+        method: 'POST',
+        password: 'password',
+        cache: true,
+        contentType: 'bar',
+        requestHeaders: {
+          foo: 'bar'
+        },
+        timeout: 5
+      }).then(response => {
+        expect(response.data).to.be('hello!');
+        expect(response.statusText).to.be('200 OK');
+        done();
+      });
+    });
+
+    it('should reject the promise for a bad status response', (done) => {
+      MockXMLHttpRequest.onRequest = request => {
+        request.respond(400, "denied!");
+      };
+      ajaxRequest('hello', {}).catch(response => {
+        expect(response.statusText).to.be('400 Bad Request');
+        expect(response.error.message).to.be('400 Bad Request');
+        done();
+      });
+    });
+
+    it('should reject the promise on an error', (done) => {
+      MockXMLHttpRequest.onRequest = request => {
+        request.error(new Error('Denied!'));
+      };
+      ajaxRequest('hello', {}).catch(response => {
+        expect(response.statusText).to.be('');
+        expect(response.error.message).to.be('Denied!');
+        done();
+      });
+    });
+
+  });
+
+  describe('#loadObject()', () => {
+
+    it('should accept a name and a module name to load', done => {
+      // The path is relative to mocha.
+      loadObject('test', '../../../test/build/target').then(func => {
+        expect(func()).to.be(1);
+        done();
+      });
+    });
+
+    it('should reject if the module name is not found', done => {
+      loadObject('test', 'foo').catch(error => {
+        expect(error.message.indexOf("Cannot find module 'foo'")).to.not.be(-1);
+        done();
+      });
+    });
+
+    it('should reject if the object is not found', done => {
+      loadObject('foo', '../../../test/build/target').catch(error => {
+        expect(error.message).to.be("Object 'foo' not found in module '../../../test/build/target'");
+        done();
+      });
+    });
+
+    it('should accept a registry', done => {
+      let registry = { test: () => { return 1 }};
+      loadObject('test', void 0, registry).then(func => {
+        expect(func()).to.be(1);
+        done();
+      });
+    });
+
+    it('should reject if the object is not in the registry', done => {
+      let registry = { test: () => { return 1 }};
+      loadObject('foo', void 0, registry).catch(error => {
+        expect(error.message).to.be("Object 'foo' not found in registry");
+        done();
+      });
     });
 
   });
