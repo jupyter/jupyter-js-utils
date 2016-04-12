@@ -56,8 +56,21 @@ describe('jupyter.services - mockXHR', () => {
       request.respond(500, {}, '');
     }
     xhr.open('GET', 'test.com');
-    xhr.onerror = (evt: any) => {
-      expect(evt.message).to.be('Invalid status code');
+    xhr.onload = () => {
+      expect(xhr.statusText).to.be('500 Internal Server Error');
+      done();
+    }
+    xhr.send();
+  });
+
+  it('should yield an error event', (done) => {
+    var xhr = new XMLHttpRequest();
+    MockXMLHttpRequest.onRequest = request => {
+      request.error(new Error('Denied!'));
+    }
+    xhr.open('GET', 'test.com');
+    xhr.onerror = (err: ErrorEvent) => {
+      expect(err.message).to.be('Denied!');
       done();
     }
     xhr.send();

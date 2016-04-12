@@ -25,6 +25,7 @@
     "docs": "typedoc --options scripts/tdoptions.json",
     "prepublish": "npm run build",
     "test:coverage": "cd test && istanbul cover _mocha -- build/index.js --foo bar",
+    "test:debug": "mocha test/build/*.js --foo bar --debug-brk",
     "test": "mocha test/build/*.js --foo bar"
   },
   "repository": {
