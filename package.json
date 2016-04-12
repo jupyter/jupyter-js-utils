@@ -18,15 +18,15 @@
     "typescript": "^1.6.2"
   },
   "scripts": {
-    "clean": "rimraf docs && rimraf lib && rimraf test/build",
+    "clean": "rimraf docs && rimraf lib && rimraf test/build && rimraf test/coverage",
     "build:src": "tsc --project src",
     "build:test": "tsc --project test/src",
     "build": "npm run build:src && npm run build:test",
     "docs": "typedoc --options scripts/tdoptions.json",
     "prepublish": "npm run build",
-    "test:coverage": "cd test && istanbul cover _mocha -- build/index.js --foo bar",
-    "test:debug": "mocha test/build/*.js --foo bar --debug-brk",
-    "test": "mocha test/build/*.js --foo bar"
+    "test:coverage": "istanbul cover --dir test/coverage _mocha -- test/build/test*.js --foo bar",
+    "test:debug": "mocha test/build/test*.js --foo bar --debug-brk",
+    "test": "mocha test/build/test*.js --foo bar"
   },
   "repository": {
     "type": "git",
