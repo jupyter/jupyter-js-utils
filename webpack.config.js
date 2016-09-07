@@ -6,7 +6,7 @@ module.exports = {
         filename: './dist/index.js',
         library: ['jupyter', 'utils'],
         libraryTarget: 'umd',
-        publicPath: 'https://npmcdn.com/jupyter-js-utils@' + version + '/dist/'
+        publicPath: 'https://unpkg.com/jupyter-js-utils@' + version + '/dist/'
     },
     devtool: 'source-map'
 };
